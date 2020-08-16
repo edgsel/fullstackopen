@@ -1,9 +1,9 @@
 import React from "react";
 
-const Statistics = ({opinions}) => {
-    return Object.entries(opinions[0]).map(([key, value]) => {
-        return <p>{key} {value}</p>
-    })
+const Statistics = ({text, clicks}) => {
+    return(
+        <p name={text}> {text}: {clicks}</p>
+    )
 };
 
 export default Statistics;
