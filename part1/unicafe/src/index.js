@@ -38,6 +38,8 @@ const App = () => {
         return result >= 0 ? result : 0;
     };
 
+    const isAnyFeedbackGiven = allClicks.some((click) => click > 0);
+
     return (
         <div>
             <Header text={"Give Feedback"}/>
@@ -45,12 +47,18 @@ const App = () => {
             <Button text={"neutral"} handleClick={handleNeutralClicks}/>
             <Button text={"bad"} handleClick={handleBadClicks}/>
             <Header text={"Statistics"}/>
-            <Statistics text={"good"} clicks={clicks.good}/>
-            <Statistics text={"neutral"} clicks={clicks.neutral}/>
-            <Statistics text={"bad"} clicks={clicks.bad}/>
-            <Statistics text={"all"} clicks={countAllClicks}/>
-            <Statistics text={"average"} clicks={calculateAverageRating()}/>
-            <Statistics text={"positive"} clicks={calculatePositiveClicks() + " %"}/>
+            {
+                isAnyFeedbackGiven ? (
+                    <div>
+                        <Statistics text={"good"} clicks={clicks.good}/>
+                        <Statistics text={"neutral"} clicks={clicks.neutral}/>
+                        <Statistics text={"bad"} clicks={clicks.bad}/>
+                        <Statistics text={"all"} clicks={countAllClicks}/>
+                        <Statistics text={"average"} clicks={calculateAverageRating()}/>
+                        <Statistics text={"positive"} clicks={calculatePositiveClicks() + " %"}/>
+                    </div>
+                ) : <p>No feedback given</p>
+            }
         </div>
     );
 };
