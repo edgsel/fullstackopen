@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 import Header from "./Header";
-import Button from "./Button";
 import Statistics from "./Statistics";
+import Buttons from "./Buttons";
 
 const App = () => {
     const [clicks, setClicks] = useState({
@@ -21,7 +21,7 @@ const App = () => {
         return sum + current;
     }, 0);
 
-    const calculatePositiveClicks = () => {
+    const calculatePositiveRating = () => {
         const result = (clicks.good * 100) / countAllClicks;
         // As the result is NaN because of division by 0
         return result >= 0 ? result : 0;
@@ -40,25 +40,27 @@ const App = () => {
 
     const isAnyFeedbackGiven = allClicks.some((click) => click > 0);
 
+    const statistics = {
+        good: allClicks[0],
+        neutral: allClicks[1],
+        bad: allClicks[2],
+        all: countAllClicks,
+        average: calculateAverageRating(),
+        positive: calculatePositiveRating()
+    };
+
+    const buttons = {
+        good: handleGoodClicks,
+        neutral: handleNeutralClicks,
+        bad: handleBadClicks
+    };
+
     return (
         <div>
             <Header text={"Give Feedback"}/>
-            <Button text={"good"} handleClick={handleGoodClicks}/>
-            <Button text={"neutral"} handleClick={handleNeutralClicks}/>
-            <Button text={"bad"} handleClick={handleBadClicks}/>
+            <Buttons data={buttons}/>
             <Header text={"Statistics"}/>
-            {
-                isAnyFeedbackGiven ? (
-                    <div>
-                        <Statistics text={"good"} clicks={clicks.good}/>
-                        <Statistics text={"neutral"} clicks={clicks.neutral}/>
-                        <Statistics text={"bad"} clicks={clicks.bad}/>
-                        <Statistics text={"all"} clicks={countAllClicks}/>
-                        <Statistics text={"average"} clicks={calculateAverageRating()}/>
-                        <Statistics text={"positive"} clicks={calculatePositiveClicks() + " %"}/>
-                    </div>
-                ) : <p>No feedback given</p>
-            }
+            {isAnyFeedbackGiven ? (<Statistics data={statistics}/>) : <p>No feedback given</p> }
         </div>
     );
 };

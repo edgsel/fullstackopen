@@ -1,8 +1,16 @@
 import React from "react";
+import Statistic from "./Statistic";
 
-const Statistics = ({text, clicks}) => {
+const Statistics = (props) => {
     return(
-        <p name={text}> {text}: {clicks}</p>
+        <div>
+            <Statistic text={"good"} value={props.data.good}/>
+            <Statistic text={"neutral"} value={props.data.neutral}/>
+            <Statistic text={"bad"} value={props.data.bad}/>
+            <Statistic text={"all"} value={props.data.all}/>
+            <Statistic text={"average"} value={props.data.average}/>
+            <Statistic text={"positive"} value={props.data.positive + "%"}/>
+        </div>
     )
 };
 
