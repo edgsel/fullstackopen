@@ -1,10 +1,16 @@
 import React from "react";
+import Total from "./Total";
 
 const Part = ({course}) => {
     return (
-        course.parts.map(item =>
-            <p key={item.id}>{item.name} {item.exercises}</p>
-        )
+        <div>
+            {
+                course.parts.map(item =>
+                    <p key={item.id}>{item.name} {item.exercises}</p>
+                )
+            }
+            <Total course={course}/>
+        </div>
     )
 };
 
